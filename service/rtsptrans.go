@@ -9,7 +9,7 @@ import (
 	"strings"
 	"sync"
 
-	"time"
+	//"time"
 
 	uuid "github.com/satori/go.uuid"
 )
@@ -74,7 +74,8 @@ func runFFMPEG(rtsp string, playCh string, ch *chan int) {
 		fmt.Sprintf("http://127.0.0.1:3000/stream/upload/%s", playCh),
 	}
 
-	cmd := exec.Command("ffmpeg", params...)
+	//cmd := exec.Command("ffmpeg", params...)
+	cmd := exec.Command("D:/01workdev/devenv/goland/workspace2019/gm-dip/bin/trans-ffmpeg.exe", params...)
 	cmd.Stdout = nil
 	cmd.Stderr = nil
 	stdin, err := cmd.StdinPipe()
@@ -96,13 +97,13 @@ func runFFMPEG(rtsp string, playCh string, ch *chan int) {
 		case <-*ch:
 			util.Log().Info("reflush channel %s rtsp %v", playCh, rtsp)
 
-		case <-time.After(60 * time.Second):
-			stdin.Write([]byte("q"))
-			err = cmd.Wait()
-			if err != nil {
-				util.Log().Error("Run ffmpeg err:%v", err.Error)
-			}
-			return
+		//case <-time.After(60 * time.Second):
+		//	stdin.Write([]byte("q"))
+		//	err = cmd.Wait()
+		//	if err != nil {
+		//		util.Log().Error("Run ffmpeg err:%v", err.Error)
+		//	}
+		//	return
 		}
 	}
 }
